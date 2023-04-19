@@ -12,10 +12,6 @@ class Channel:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.channel_id = channel_id
 
-    def printj(self: dict) -> None:
-        """Выводит словарь в json-подобном удобном формате с отступами"""
-        print(json.dumps(self, indent=2, ensure_ascii=False))
-
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
         channel_info = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
