@@ -10,10 +10,31 @@ class Channel:
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.channel_id = channel_id
+        self.__channel_id = channel_id
+        self.channel_info = self.youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
+        self.title = self.channel_info["items"][0]["snippet"]["title"]
+        self.description = self.channel_info["items"][0]["snippet"]["description"]
+        self.video_count = self.channel_info["items"][0]["snippet"]["title"]
+        self.url = f'https://www.youtube.com/channel/{self.channel_info["items"][0]["id"]}'
+        self.subs = self.channel_info["items"][0]["statistics"]["subscriberCount"]
+        self.video_count = self.channel_info["items"][0]["statistics"]["videoCount"]
+        self.views = self.channel_info["items"][0]["statistics"]["viewCount"]
 
-    def print_info(self) -> None:
+        self.__service = self.youtube
+
+    def print_info(self) -> str:
         """Выводит в консоль информацию о канале."""
-        channel_info = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
-        printj = json.dumps(channel_info, indent=2, ensure_ascii=False)
-        return print(printj)
+        printj = json.dumps(self.channel_info, indent=2, ensure_ascii=False)
+        return printj
+
+    @property
+    def channel_id(self):
+        return self.__channel_id
+
+    @classmethod
+    def get_service(cls):
+        return cls.youtube
+
+    def to_json(self, name):
+        with open(f"../homework-2/{name}", "w", encoding="utf-8") as f:
+            json.dump(self.channel_info, f, sort_keys=True, indent=2, ensure_ascii=False)
