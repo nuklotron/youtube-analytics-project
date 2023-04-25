@@ -24,22 +24,22 @@ class Channel:
         return f"{self.title} ({self.url})"
 
     def __add__(self, other):
-        return self.subs + other.subs
+        return int(self.subs) + int(other.subs)
 
     def __sub__(self, other):
         return int(self.subs) - int(other.subs)
 
     def __lt__(self, other):
-        return self.subs < other.subs
+        return int(self.subs) < int(other.subs)
 
     def __le__(self, other):
-        return self.subs <= other.subs
+        return int(self.subs) <= int(other.subs)
 
     def __gt__(self, other):
-        return self.subs > other.subs
+        return int(self.subs) > int(other.subs)
 
     def __ge__(self, other):
-        return self.subs >= other.subs
+        return int(self.subs) >= int(other.subs)
 
     def print_info(self) -> str:
         """Выводит в консоль информацию о канале."""
