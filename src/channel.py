@@ -14,13 +14,32 @@ class Channel:
         self.channel_info = self.youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         self.title = self.channel_info["items"][0]["snippet"]["title"]
         self.description = self.channel_info["items"][0]["snippet"]["description"]
-        self.video_count = self.channel_info["items"][0]["snippet"]["title"]
         self.url = f'https://www.youtube.com/channel/{self.channel_info["items"][0]["id"]}'
         self.subs = self.channel_info["items"][0]["statistics"]["subscriberCount"]
         self.video_count = self.channel_info["items"][0]["statistics"]["videoCount"]
         self.views = self.channel_info["items"][0]["statistics"]["viewCount"]
-
         self.__service = self.youtube
+
+    def __str__(self):
+        return f"{self.title} ({self.url})"
+
+    def __add__(self, other):
+        return self.subs + other.subs
+
+    def __sub__(self, other):
+        return int(self.subs) - int(other.subs)
+
+    def __lt__(self, other):
+        return self.subs < other.subs
+
+    def __le__(self, other):
+        return self.subs <= other.subs
+
+    def __gt__(self, other):
+        return self.subs > other.subs
+
+    def __ge__(self, other):
+        return self.subs >= other.subs
 
     def print_info(self) -> str:
         """Выводит в консоль информацию о канале."""
