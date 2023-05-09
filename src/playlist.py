@@ -58,7 +58,3 @@ class PlayList:
         for k, v in video_dict.items():
             if k == video_dict_[0]:
                 return f"https://youtu.be/{v}"
-
-
-pl = PlayList('PLguYHBi01DWr4bRWc4uaguASmo7lW4GCb')
-print(pl.show_best_video())
