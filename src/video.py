@@ -9,9 +9,8 @@ class Video:
     youtube = build('youtube', 'v3', developerKey=api_key)
 
     def __init__(self, id_video):
-
+        self.__id_video = id_video
         try:
-            self.__id_video = id_video
             self.video_info = self.youtube.videos().list(id=self.__id_video, part='snippet,statistics').execute()
 
             if self.video_info['items']:
@@ -21,7 +20,6 @@ class Video:
                 self.likes = self.video_info["items"][0]["statistics"]["likeCount"]
 
             else:
-                self.id_video = id_video
                 self.title = None
                 self.likes = None
                 self.views = None
